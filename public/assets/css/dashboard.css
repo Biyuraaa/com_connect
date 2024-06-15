@@ -1,0 +1,295 @@
+/* Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: "Poppins", sans-serif;
+  background: rgba(49, 197, 168, 0.511);
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 30px;
+  background: #3e3636c4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo a {
+  color: #000;
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 2rem;
+}
+
+.search_box input {
+  padding: 10px;
+  width: 250px;
+  background: rgb(239, 236, 236);
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-size: 14px;
+}
+
+.search_box i {
+  padding: 10px;
+  cursor: pointer;
+  color: #f0eded;
+  background: #000;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.header-icons i {
+  margin-right: 2rem;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.header-icons .account img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+/* Main Content Section */
+.container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CSS untuk side bar */
+nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 250px; /* Lebar sidebar saat ditampilkan */
+  background-color: #454f48e0;
+  padding-top: 50px;
+  transition: width 0.3s; /* Transisi hanya pada lebar */
+  z-index: 9999; /* Menempatkan sidebar di atas konten utama */
+  color: #ffffff; /* Warna font pada sidebar */
+}
+
+/* CSS untuk main body */
+.main-body {
+  margin-left: 250px; /* Jarak dari sidebar saat ditampilkan */
+  transition: margin-left 0.3s; /* Transisi ketika lebar berubah */
+}
+.main-body {
+  margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+}
+
+
+/* Atur tata letak overlay saat sidebar disembunyikan */
+.overlay.collapsed {
+  display: none;
+}
+
+/* Atur lebar ikon toggle agar sesuai dengan sidebar yang telah disembunyikan */
+.toggle-btn {
+  right: 0;
+}
+
+
+/* Promo Card Styling */
+.promo_card {
+  color: #fff;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 20px;
+  background: rgb(37, 37, 37);
+}
+
+.promo_card h1,
+.promo_card span,
+.promo_card button {
+  margin: 10px;
+  font-size: 18px;
+}
+
+.promo_card button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #000;
+  color: #fff;
+  border: none;
+}
+
+/* History List Styling */
+.history_lists {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #151414b6;
+  padding: 5px;
+  text-align: left;
+}
+
+table th {
+  background-color: #6ba488bc;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Sidebar Navigation */
+.side_navbar {
+  padding: 10px;
+}
+
+.side_navbar ul {
+  list-style-type: none;
+}
+
+.side_navbar span {
+  color: rgb(240, 234, 234);
+  margin: 10px;
+  font-size: 14px;
+}
+
+.side_navbar a {
+  padding: 12px 20px;
+  font-weight: 500;
+  font-size: 15px;
+  color: rgb(100, 100, 100);
+  display: block;
+}
+
+.side_navbar a:hover {
+  background: rgb(235, 235, 235);
+  border-radius: 5px;
+}
+
+.side_navbar .active {
+  border-left: 3px solid rgb(100, 100, 100);
+}
+
+/* Added styles for tab bar */
+.side_navbar ul li {
+  margin-bottom: 10px;
+}
+
+.side_navbar ul li.active a {
+  padding-left: 15px;
+  background-color: #f0f0f0;
+}
+
+/* CSS untuk modifikasi tampilan "My Profile" */
+nav {
+  width: 90px; /* Mengubah lebar sidebar saat pertama kali halaman dimuat */
+  background-color: #454f48e0;
+  padding-top: 50px;
+  transition: width 0.3s;
+}
+
+.main-body {
+  flex-grow: 1;
+  padding: 20px;
+  padding-left: 90px; /* Menggeser konten utama sebesar lebar sidebar */
+  transition: padding-left 0.5s; /* Menambahkan transisi untuk perubahan padding kiri */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  nav {
+    width: 90px;
+  }
+  
+  nav ul li a i {
+    margin-right: 0;
+  }
+  
+  .main-body {
+    padding-left: 90px;
+  }
+}
+
+.profile-container {
+  margin-left: 20px; /* Menambahkan margin kiri */
+}
+
+/* CSS untuk responsif ketika sidebar disembunyikan atau ditampilkan */
+@media screen and (max-width: 768px) {
+  /* Atur lebar ketika layar kurang dari atau sama dengan 768px */
+  .main-body {
+    margin-left: 0; /* Set margin kiri menjadi 0 */
+  }
+}
+
+/* Sidebar Styling */
+nav {
+  width: 250px;
+  background-color: #454f48e0;
+  padding-top: 50px;
+  transition: width 0.3s;
+}
+
+nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+nav ul li {
+  margin-bottom: 10px;
+}
+
+nav ul li a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+}
+
+nav ul li a i {
+  margin-right: 10px;
+}
+
+.main-body {
+  flex-grow: 1;
+  padding: 20px;
+  transition: padding-left 0.3s;
+}
+
