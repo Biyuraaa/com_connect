@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('project_id')->nullable(false);
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('role')->nullable();
+            $table->unique(['user_id', 'project_id']);
             $table->timestamps();
         });
     }

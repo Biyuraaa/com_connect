@@ -35,11 +35,6 @@ class Project extends Model
         return $this->hasMany(UserProject::class);
     }
 
-    public function rewards(): HasMany
-    {
-        return $this->hasMany(Reward::class);
-    }
-
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(User::class);

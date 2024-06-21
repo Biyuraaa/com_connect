@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\CategoryProjectController;
 use App\Http\Controllers\RewardController;
+use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\WalletController;
 use App\Models\UserProject;
 
 Route::get('/', function () {
@@ -21,7 +23,14 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::resource('users', UserController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('categories', CategoryProjectController::class);
+    Route::get('rewars/buy', [RewardController::class, 'buy'])->name('rewards.buy');
+    Route::post('rewards/buy', [RewardController::class, 'buyReward'])->name('rewards.buyReward');
+    Route::patch('rewards/{id}/redeem', [RewardController::class, 'redeemReward'])->name('rewards.redeem');
     Route::resource('rewards', RewardController::class);
+    Route::resource('communities', CommunityController::class);
+    Route::get('/wallets/deposit', [WalletController::class, 'deposit'])->name('wallets.deposit');
+    Route::post('/wallets/deposit', [WalletController::class, 'storeDeposit'])->name('wallets.storeDeposit');
+    Route::resource('wallets', WalletController::class);
 });
 
 Route::middleware('auth')->group(function () {
@@ -29,9 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/rewards', [PageController::class, 'rewards'])->name('rewards');
+    Route::get('/projects', [ProjectController::class, 'projects'])->name('projects');
     Route::get('/points', [PageController::class, 'points'])->name('points');
     Route::post('/projects', [ProjectController::class, 'join'])->name('projects.join');
+    Route::delete('/projects', [ProjectController::class, 'leave'])->name('projects.leave');
+    Route::get('/communities', [CommunityController::class, 'index'])->name('communities');
 });
 
 Route::controller(PageController::class)->group(function () {

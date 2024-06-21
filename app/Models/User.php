@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -71,8 +72,19 @@ class User extends Authenticatable
         return $this->hasMany(UserReward::class);
     }
 
-    public function projects(): BelongsToMany
+    public function project(): HasMany
     {
-        return $this->belongsToMany(Project::class, 'user_projects');
+        return $this->hasMany(Project::class, 'organizer_id');
+    }
+
+    public function community(): HasMany
+    {
+        return $this->hasMany(Community::class, 'leader_id');
+    }
+
+
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RewardFactory extends Factory
 {
+    protected $model = \App\Models\Reward::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +18,10 @@ class RewardFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'description' => $this->faker->text,
+            'points' => $this->faker->numberBetween(10, 100),
+            'price' => $this->faker->numberBetween(1000, 10000),
         ];
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CategoryCommunityFactory extends Factory
 {
+    protected $model = \App\Models\CategoryCommunity::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +18,8 @@ class CategoryCommunityFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'description' => $this->faker->text,
         ];
     }
 }

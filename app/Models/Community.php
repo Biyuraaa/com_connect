@@ -16,6 +16,7 @@ class Community extends Model
     protected $fillable = [
         'name',
         'description',
+        'leader_id',
         'category_id',
     ];
 
@@ -27,5 +28,10 @@ class Community extends Model
     public function user_communities(): HasMany
     {
         return $this->hasMany(UserCommunity::class);
+    }
+
+    public function leader(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'leader_id');
     }
 }

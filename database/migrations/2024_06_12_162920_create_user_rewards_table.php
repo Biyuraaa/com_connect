@@ -17,8 +17,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('reward_id')->nullable(false);
             $table->foreign('reward_id')->references('id')->on('rewards')->onDelete('cascade');
-            $table->unsignedBigInteger('organizer_id')->nullable(false);
-            $table->foreign('organizer_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('code', 14)->unique();
             $table->timestamp('redeemed_at')->nullable();
             $table->timestamp('expires_at')->nullable();

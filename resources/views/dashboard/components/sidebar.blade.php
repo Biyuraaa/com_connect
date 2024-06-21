@@ -10,6 +10,7 @@
                 <a class="nav-link" href="{{route('users.index')}}">Users</a>
                 <a class="nav-link" href="{{route('rewards.index')}}">Reward</a>
                 <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
+                <a class="nav-link" href="{{route('communities.index')}}">Communities</a>
             </nav>
         </div>
         <div class="sidebar-footer">

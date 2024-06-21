@@ -16,7 +16,6 @@ class UserReward extends Model
     protected $fillable = [
         'user_id',
         'reward_id',
-        'organizer_id',
         'redeemed_at',
         'expires_at',
         'status',
@@ -54,25 +53,5 @@ class UserReward extends Model
     public function reward(): BelongsTo
     {
         return $this->belongsTo(Reward::class);
-    }
-
-    public function organizer(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function isPending(): bool
-    {
-        return $this->status === 'pending';
-    }
-
-    public function isRedeemed(): bool
-    {
-        return $this->status === 'redeemed';
-    }
-
-    public function isExpired(): bool
-    {
-        return $this->status === 'expired';
     }
 }

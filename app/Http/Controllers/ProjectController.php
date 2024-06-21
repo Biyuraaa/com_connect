@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\UserProject;
 use App\Models\CategoryProject;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -19,8 +19,16 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
-        return view('dashboard.projects.index', compact('projects'));
+        if (Auth::user()->role == 'admin') {
+            $projects = Project::where('status', 'progress')->get();
+            return view('dashboard.projects.index', compact('projects'));
+        } else {
+            $user = Auth::user();
+            $projects = Project::whereHas('user_projects', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->orWhere('organizer_id', $user->id)->get();
+            return view('pages.auth.projects.index', compact('projects'));
+        }
     }
 
     /**
@@ -28,9 +36,13 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $organizers = User::all();
         $categories = CategoryProject::all();
-        return view('dashboard.projects.create', compact('organizers', 'categories'));
+        if (Auth::user()->role == 'admin') {
+            $organizers = User::all();
+            return view('dashboard.projects.create', compact('organizers', 'categories'));
+        } else {
+            return view('pages.auth.projects.create', compact('categories'));
+        }
     }
 
     /**
@@ -66,13 +78,21 @@ class ProjectController extends Controller
         $participants = $project->user_projects;
         $organizer = $project->organizer;
         $category = $project->category;
-
-        return view('dashboard.projects.show', compact(
-            'project',
-            'participants',
-            'organizer',
-            'category'
-        ));
+        if (Auth::user()->role == 'admin') {
+            return view('dashboard.projects.show', compact(
+                'project',
+                'participants',
+                'organizer',
+                'category'
+            ));
+        } else {
+            return view('pages.projects.show', compact(
+                'project',
+                'participants',
+                'organizer',
+                'category'
+            ));
+        }
     }
 
     /**

@@ -35,17 +35,8 @@
                 <p>
                   {{ $project->name }} ini akan dilakukan di {{ $project->location }}, pada {{ $project->date }}
                 </p>
-                <form action="{{route('projects.join')}}" method="post">
-                  @method('POST')
-                  @csrf
-                  <input type="hidden" name="project_id" value="{{ $project->id }}">
-                  @if (Auth::user())
-                  <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                  @endif
-                  <button type="submit" >
-                      Daftar
-                  </button>
-                </form>
+                <a href="{{route('projects.show', $project)}}">View</a>
+
                 
                 
               </div>

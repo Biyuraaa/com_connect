@@ -4,9 +4,10 @@
       <span class="hidden-text">Main Menu</span>
       <a class="item-nav" href="{{route('dashboard')}}"><i class="fas fa-home"></i> Back to Home</a>
       <a class="item-nav" href="{{route('profile.index')}}"><i class="fas fa-user"></i> My Profile</a>
-      <a class="item-nav" href="{{route('histories')}}"><i class="fas fa-history"></i> Activity History</a>
-      <a class="item-nav" href="{{route('points')}}"><i class="fas fa-coins"></i> My Points</a>
-      <a class="item-nav" href="{{route('rewards')}}"><i class="fas fa-gift"></i> Rewards</a>
+      <a class="item-nav" href="{{route('projects.index')}}"><i class="fas fa-tasks"></i> My Projects</a>
+      <a class="item-nav" href="{{route('wallets.index')}}"><i class="fas fa-wallet"></i> My Wallets</a>
+      <a class="item-nav" href="{{route('rewards.index')}}"><i class="fas fa-coins"></i> My Rewards</a>
+      <a class="item-nav" href="{{route('communities')}}"><i class="fas fa-users"></i> My Communities</a>
 
       <div class="links">
         <span class="hidden-text">Lainnya</span>

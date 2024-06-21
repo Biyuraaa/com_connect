@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('description')->nullable();
+            $table->unsignedBigInteger('leader_id')->nullable(false);
+            $table->foreign('leader_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('category_id')->nullable(false);
             $table->foreign('category_id')->references('id')->on('category_communities')->onDelete('cascade');
             $table->timestamps();

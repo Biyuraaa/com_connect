@@ -6,27 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class UserCommunity extends Model
+class Wallet extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_communities';
+    protected $table = 'wallets';
 
-    protected $fillable = [
-        'user_id',
-        'community_id',
-        'role',
-        'is_active',
-    ];
+    protected $fillable = ['user_id', 'balance'];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-
-    public function community(): BelongsTo
+    public function transactions()
     {
-        return $this->belongsTo(Community::class);
+        return $this->hasMany(Transaction::class);
     }
 }

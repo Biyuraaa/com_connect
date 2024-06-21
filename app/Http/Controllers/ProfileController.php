@@ -8,13 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Project;
 
 class ProfileController extends Controller
 {
     public function index(): View
     {
-        $rewardHistory = Auth::user()->user_rewards;
-        return view('profile.index', compact('rewardHistory'));
+        $user = Auth::user();
+        $user_projects = Project::whereHas('user_projects', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+        $userRewards = $user->user_rewards;
+        return view('profile.index', compact(
+            'user',
+            'user_projects',
+            'userRewards'
+        ));
     }
     /**
      * Display the user's profile form.

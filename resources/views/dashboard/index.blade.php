@@ -17,19 +17,19 @@
             </div>
             <div class="col-md-3">
                 <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Total Books</div>
+                    <div class="card-header">Total Communities</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $communities->count() }}</h5>
-                        <p class="card-text">Books available</p>
+                        <p class="card-text">Communities created</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">Total Sales</div>
+                    <div class="card-header">Total Projects</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $projects->count() }}</h5>
-                        <p class="card-text">Completed sales</p>
+                        <p class="card-text">Projects created</p>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                                 @foreach ($upcomingProjects as $project)
                                 <tr>
                                     <td>{{ $project->name }}</td>
-                                    <td>{{ $project->organizer }}</td>
+                                    <td>{{ $project->organizer->name }}</td>
                                     <td>{{ $project->date }}</td>
                                     <td>{{ $project->location }}</td>
                                     <td>{{ $project->status }}</td>

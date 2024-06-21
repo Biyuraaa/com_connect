@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -39,9 +40,15 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user = User::with(['user_communities', 'user_projects', 'user_rewards'])->findOrFail($user->id);
-        return view('dashboard.users.show', compact('user'));
+
+        if (Auth::user()->role == 'admin') {
+            return view('dashboard.users.show', compact('user'));
+        } else {
+            $user = User::with(['user_communities', 'user_projects', 'user_rewards'])->findOrFail($user->id);
+            return view('pages.auth.users.show', compact('user'));
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.

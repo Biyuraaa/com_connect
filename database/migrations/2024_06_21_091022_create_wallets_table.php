@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_communities', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('community_id')->nullable(false);
-            $table->foreign('community_id')->references('id')->on('communities')->onDelete('cascade');
-            $table->string('role')->default('member');
-            $table->boolean('is_active')->default(true);
+            $table->integer('balance')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_communities');
+        Schema::dropIfExists('wallets');
     }
 };

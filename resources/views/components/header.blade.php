@@ -13,7 +13,11 @@
       <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
+            @if (Auth::user())
+            <a class="nav-link" href="{{route('dashboard')}}">Home <span class="sr-only">(current)</span></a>
+            @else
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            @endif
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{route('about')}}"> About</a>
