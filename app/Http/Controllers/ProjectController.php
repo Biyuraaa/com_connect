@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\User;
 use App\Models\UserProject;
 use App\Models\CategoryProject;
+use App\Models\Community;
+use App\Models\Reward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,10 +77,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $participants = $project->user_projects;
         $organizer = $project->organizer;
         $category = $project->category;
         if (Auth::user()->role == 'admin') {
+            $participants = $project->user_projects;
             return view('dashboard.projects.show', compact(
                 'project',
                 'participants',
@@ -86,11 +88,18 @@ class ProjectController extends Controller
                 'category'
             ));
         } else {
-            return view('pages.projects.show', compact(
+            //tolong buatkan code untuk menambil reward yang dimiliki user
+            $rewards = Reward::whereHas('user_rewards', function ($query) {
+                $query->where('user_id', Auth::user()->id)
+                    ->where('status', 'pending'); // Menambahkan kondisi status 'pending'
+            })->get();
+            $participants = $project->user_projects()->with('user')->get();
+            return view('pages.auth.projects.show', compact(
                 'project',
                 'participants',
                 'organizer',
-                'category'
+                'category',
+                'rewards'
             ));
         }
     }
@@ -149,7 +158,17 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
     }
 
-    public function join(Request $request)
+    public function join(Project $project)
+    {
+        $participants = $project->user_projects;
+        $organizer = $project->organizer;
+        $category = $project->category;
+
+        return view('pages.projects.join', compact('project', 'participants', 'organizer', 'category'));
+    }
+
+
+    public function doJoin(Request $request)
     {
         $request->validate([
             'project_id' => 'required|exists:projects,id',
@@ -162,5 +181,31 @@ class ProjectController extends Controller
         ]);
 
         return redirect()->route('projects')->with('success', 'Project joined successfully');
+    }
+
+
+    public function participant(Project $project, User $user)
+    {
+        $projects = Project::whereHas('user_projects', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get(); // Ensure we get a collection
+
+        $communities = Community::whereHas('user_communities', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+
+        return view('pages.auth.projects.participant', compact(
+            'user',
+            'projects',
+            'communities',
+            'project'
+        ));
+    }
+
+    public function remove(Project $project, User $user)
+    {
+        $user_project = UserProject::where('user_id', $user->id)->where('project_id', $project->id)->first();
+        $user_project->delete();
+        return redirect()->route('projects.show', $project->id)->with('success', 'Participant removed successfully');
     }
 }

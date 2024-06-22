@@ -11,6 +11,7 @@ use App\Models\UserReward;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserProject;
 
 
 class RewardController extends Controller
@@ -176,6 +177,63 @@ class RewardController extends Controller
             DB::rollBack();
 
             return redirect()->back()->with('error', 'An error occurred while redeeming the reward. Please try again.');
+        }
+    }
+
+    public function give(Request $request)
+
+    {
+        $request->validate([
+            'user_id' => 'required|exists:user_projects,id',
+            'reward_id' => 'required|exists:rewards,id'
+        ]);
+
+        $user = Auth::user();
+
+        $user_reward = UserReward::where('user_id', $user->id)->where('reward_id', $request->reward_id)->first();
+
+        $user_reward->user_id = $request->user_id;
+        $user_reward->save();
+
+        return redirect()->route('projects.show', $request->project_id)->with('success', 'Reward given successfully');
+    }
+
+    public function reedemPoint(Request $request)
+    {
+        $request->validate([
+            'points' => 'required|integer|min:1',
+        ]);
+
+        $user = Auth::user();
+        $wallet = $user->wallet;
+
+        if ($user->points < $request->points) {
+            return redirect()->back()->with('error', 'Insufficient points');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $wallet->balance += $request->points;
+            $wallet->save();
+
+            $user->points -= $request->points;
+            $user->save();
+
+            Transaction::create([
+                'wallet_id' => $wallet->id,
+                'reward_id' => null,
+                'amount' => $request->points,
+                'type' => 'redeem',
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('profile.index')->with('success', 'Points redeemed successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'An error occurred while redeeming points. Please try again.');
         }
     }
 }

@@ -35,7 +35,7 @@
                 <p>
                   {{ $project->name }} ini akan dilakukan di {{ $project->location }}, pada {{ $project->date }}
                 </p>
-                <a href="{{route('projects.show', $project)}}">View</a>
+                <a href="{{route('projects.join', ['project' => $project->id])}}">Join Project</a>
 
                 
                 

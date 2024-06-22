@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="project-detail" style="padding: 20px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
                     @if($project->image)
-                    <img src="{{ asset('assets/image/projects/' . $project->image) }}" alt="{{ $project->name }}" class="img-fluid" style="width: 100%; height: auto; margin-bottom: 20px;">
+                    <img src="{{ asset('assets/images/projects/' . $project->image) }}" alt="{{ $project->name }}" class="img-fluid" style="width: 100%; height: auto; margin-bottom: 20px;">
                     @endif
                     <h3 style="margin-top: 20px; margin-bottom: 20px;">{{ $project->name }}</h3>
                     <p>{{ $project->description }}</p>
@@ -27,8 +27,7 @@
                     <p><strong>Category:</strong> {{ $category->name }}</p>
                     <p><strong>Status:</strong> {{ ucfirst($project->status) }}</p>
                     <p><strong>Capacity:</strong> {{ $project->capacity }}</p>
-                    <form action="{{ route('projects.join') }}" method="post" style="margin-bottom: 20px;">
-                        @method('POST')
+                    <form action="{{ route('projects.join', ['project' => $project->id]) }}" method="post" style="margin-bottom: 20px;">
                         @csrf
                         <input type="hidden" name="project_id" value="{{ $project->id }}">
                         @if (Auth::user())
